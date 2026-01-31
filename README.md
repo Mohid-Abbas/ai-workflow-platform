@@ -1,0 +1,2 @@
+# ai-workflow-platform
+A high-performance automation ecosystem built on n8n that orchestrates workflows across 15+ services, including Gmail, Slack, and Notion. This hub features an intelligent routing system with advanced error handling and retry logic, achieving an 80% reduction in manual data processing. The architecture is supported by a custom FastAPI backend that provides real-time execution analytics and failure alerts, ensuring a robust, event-driven infrastructure for seamless data synchronization.
