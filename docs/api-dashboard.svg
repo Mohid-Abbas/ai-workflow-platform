@@ -1,0 +1,41 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#1a1a1a"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="100%" height="60" fill="#2d2d2d"/>
+  <text x="20" y="40" font-family="Arial" font-size="24" fill="#ffffff">FastAPI Docs</text>
+  
+  <!-- Content Container -->
+  <rect x="20" y="80" width="760" height="500" rx="4" fill="#2d2d2d"/>
+  
+  <!-- Endpoints -->
+  <!-- GET /workflows -->
+  <rect x="40" y="100" width="720" height="50" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+  <rect x="50" y="110" width="60" height="30" rx="4" fill="#4caf50"/>
+  <text x="60" y="130" font-family="Arial" font-size="14" font-weight="bold" fill="#ffffff">GET</text>
+  <text x="120" y="130" font-family="monospace" font-size="16" fill="#333">/api/v1/workflows</text>
+  <text x="600" y="130" font-family="Arial" font-size="14" fill="#666">Get all workflows</text>
+
+  <!-- POST /workflows -->
+  <rect x="40" y="160" width="720" height="50" rx="4" fill="#e3f2fd" stroke="#2196f3" stroke-width="1"/>
+  <rect x="50" y="170" width="60" height="30" rx="4" fill="#2196f3"/>
+  <text x="58" y="190" font-family="Arial" font-size="14" font-weight="bold" fill="#ffffff">POST</text>
+  <text x="120" y="190" font-family="monospace" font-size="16" fill="#333">/api/v1/workflows</text>
+  <text x="600" y="190" font-family="Arial" font-size="14" fill="#666">Create workflow</text>
+
+  <!-- POST /execute -->
+  <rect x="40" y="220" width="720" height="50" rx="4" fill="#e3f2fd" stroke="#2196f3" stroke-width="1"/>
+  <rect x="50" y="230" width="80" height="30" rx="4" fill="#2196f3"/>
+  <text x="58" y="250" font-family="Arial" font-size="14" font-weight="bold" fill="#ffffff">POST</text>
+  <text x="140" y="250" font-family="monospace" font-size="16" fill="#333">/api/v1/workflows/{id}/execute</text>
+  <text x="600" y="250" font-family="Arial" font-size="14" fill="#666">Trigger workflow</text>
+  
+  <!-- GET /analytics -->
+  <rect x="40" y="280" width="720" height="50" rx="4" fill="#e8f5e9" stroke="#4caf50" stroke-width="1"/>
+  <rect x="50" y="290" width="60" height="30" rx="4" fill="#4caf50"/>
+  <text x="60" y="310" font-family="Arial" font-size="14" font-weight="bold" fill="#ffffff">GET</text>
+  <text x="120" y="310" font-family="monospace" font-size="16" fill="#333">/api/v1/analytics/metrics</text>
+  <text x="600" y="310" font-family="Arial" font-size="14" fill="#666">System metrics</text>
+
+</svg>

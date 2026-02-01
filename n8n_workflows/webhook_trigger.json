@@ -1,0 +1,99 @@
+{
+    "name": "Webhook Logic",
+    "nodes": [
+        {
+            "parameters": {
+                "path": "incoming_webhook",
+                "options": {}
+            },
+            "name": "Webhook",
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 1,
+            "position": [
+                250,
+                300
+            ],
+            "webhookId": "b1b0e0c0-d0e0-4000-8000-000000000000"
+        },
+        {
+            "parameters": {
+                "dataType": "string",
+                "value1": "={{$json[\"body\"][\"priority\"]}}",
+                "rules": {
+                    "rules": [
+                        {
+                            "value2": "high"
+                        },
+                        {
+                            "value2": "low",
+                            "output": 1
+                        }
+                    ]
+                }
+            },
+            "name": "Priority Switch",
+            "type": "n8n-nodes-base.switch",
+            "typeVersion": 1,
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "channel": "urgent-alerts",
+                "text": "High Priority Alert!"
+            },
+            "name": "Slack (Urgent)",
+            "type": "n8n-nodes-base.slack",
+            "typeVersion": 1,
+            "position": [
+                700,
+                200
+            ]
+        },
+        {
+            "parameters": {
+                "options": {}
+            },
+            "name": "Log Info",
+            "type": "n8n-nodes-base.googleSheets",
+            "typeVersion": 1,
+            "position": [
+                700,
+                400
+            ]
+        }
+    ],
+    "connections": {
+        "Webhook": {
+            "main": [
+                [
+                    {
+                        "node": "Priority Switch",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Priority Switch": {
+            "main": [
+                [
+                    {
+                        "node": "Slack (Urgent)",
+                        "type": "main",
+                        "index": 0
+                    }
+                ],
+                [
+                    {
+                        "node": "Log Info",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

@@ -1,0 +1,40 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#1a1a1a"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="100%" height="60" fill="#2d2d2d"/>
+  <text x="20" y="40" font-family="Arial" font-size="24" fill="#ffffff">Webhook Logs</text>
+  
+  <!-- Table Header -->
+  <rect x="20" y="80" width="760" height="40" fill="#424242"/>
+  <text x="40" y="105" font-family="Arial" font-size="14" fill="#aaa">TIMESTAMP</text>
+  <text x="200" y="105" font-family="Arial" font-size="14" fill="#aaa">METHOD</text>
+  <text x="300" y="105" font-family="Arial" font-size="14" fill="#aaa">ENDPOINT</text>
+  <text x="600" y="105" font-family="Arial" font-size="14" fill="#aaa">STATUS</text>
+
+  <!-- Row 1 -->
+  <line x1="20" y1="130" x2="780" y2="130" stroke="#333" stroke-width="1"/>
+  <text x="40" y="155" font-family="monospace" font-size="14" fill="#fff">2026-02-01 10:00:01</text>
+  <text x="200" y="155" font-family="Arial" font-size="14" font-weight="bold" fill="#4caf50">POST</text>
+  <text x="300" y="155" font-family="monospace" font-size="14" fill="#ddd">/webhooks/incoming/stripe</text>
+  <rect x="600" y="140" width="60" height="24" rx="4" fill="#4caf50"/>
+  <text x="615" y="157" font-family="Arial" font-size="12" fill="#fff">200 OK</text>
+
+  <!-- Row 2 -->
+  <line x1="20" y1="180" x2="780" y2="180" stroke="#333" stroke-width="1"/>
+  <text x="40" y="205" font-family="monospace" font-size="14" fill="#fff">2026-02-01 10:05:23</text>
+  <text x="200" y="205" font-family="Arial" font-size="14" font-weight="bold" fill="#4caf50">POST</text>
+  <text x="300" y="205" font-family="monospace" font-size="14" fill="#ddd">/webhooks/incoming/slack</text>
+  <rect x="600" y="190" width="60" height="24" rx="4" fill="#4caf50"/>
+  <text x="615" y="207" font-family="Arial" font-size="12" fill="#fff">200 OK</text>
+
+  <!-- Row 3 -->
+  <line x1="20" y1="230" x2="780" y2="230" stroke="#333" stroke-width="1"/>
+  <text x="40" y="255" font-family="monospace" font-size="14" fill="#fff">2026-02-01 10:12:45</text>
+  <text x="200" y="255" font-family="Arial" font-size="14" font-weight="bold" fill="#4caf50">POST</text>
+  <text x="300" y="255" font-family="monospace" font-size="14" fill="#ddd">/webhooks/incoming/mail</text>
+  <rect x="600" y="240" width="80" height="24" rx="4" fill="#f44336"/>
+  <text x="610" y="257" font-family="Arial" font-size="12" fill="#fff">500 ERROR</text>
+
+</svg>
