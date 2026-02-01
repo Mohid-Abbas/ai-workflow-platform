@@ -273,13 +273,15 @@ Circuit Breaker Pattern
 📸 Screenshots
 Add these screenshots to your repo:
 1. n8n Workflow Canvas
-./docs/n8n-canvas.png
+![n8n Workflow Canvas](./docs/n8n-canvas.png)
 Example of Gmail to Slack workflow with conditional logic
+
 2. FastAPI Dashboard
-./docs/api-dashboard.svg
+![FastAPI Dashboard](./docs/api-dashboard.svg)
 Real-time execution monitoring and analytics
+
 3. Webhook Logs
-./docs/webhook-logs.svg
+![Webhook Logs](./docs/webhook-logs.svg)
 Detailed request/response logging for debugging
 
 4. Database Schema
