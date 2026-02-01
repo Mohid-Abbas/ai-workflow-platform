@@ -1,13 +1,3 @@
-
----
-
-## Project : AI Workflow Automation Platform
-
-**Repository Name:** `ai-workflow-platform`
-
-### README.md Content:
-
-```markdown
 # ⚡ AI Workflow Automation Platform
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://python.org)
@@ -120,11 +110,13 @@ ai-workflow-platform/
 ```bash
 git clone https://github.com/Mohid-Abbas/ai-workflow-platform.git
 cd ai-workflow-platform
+```
 
 2. **Configure environment**
 ```bash
 cp .env.example .env
 # Edit .env with your database and n8n credentials
+```
 
 3. **Start services**
 ```bash
