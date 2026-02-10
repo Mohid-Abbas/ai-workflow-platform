@@ -8,7 +8,7 @@
 
 A enterprise workflow automation hub inspired by Zapier and Make.com, built with n8n, FastAPI, and PostgreSQL. Features intelligent routing, error handling, retry mechanisms, and comprehensive monitoring for 15+ service integrations.
 
-![Automation Dashboard](./docs/dashboard.png)
+<!-- ![Automation Dashboard](./docs/dashboard.png) -->
 
 ## 🌟 Key Features
 
