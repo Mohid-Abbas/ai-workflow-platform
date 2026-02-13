@@ -23,7 +23,7 @@ A enterprise workflow automation hub inspired by Zapier and Make.com, built with
 ## 🏗️ System Architecture
 
 
-┌─────────────────────────────────────────────────────────────┐
+<!-- ┌─────────────────────────────────────────────────────────────┐
 │                        Client Layer                         │
 │         (React Dashboard / API Clients / Webhooks)          │
 └──────────────────────┬──────────────────────────────────────┘
@@ -55,8 +55,57 @@ A enterprise workflow automation hub inspired by Zapier and Make.com, built with
 │  │ PostgreSQL   │  │ Redis        │  │ External APIs    │   │
 │  │ (Metadata)   │  │ (Queue/Cache)│  │ (15+ Services)   │   │
 │  └──────────────┘  └──────────────┘  └──────────────────┘   │
-└─────────────────────────────────────────────────────────────┘
+└─────────────────────────────────────────────────────────────┘ -->
+graph LR
+    %% Direction: Left to Right
 
+    subgraph ClientLayer [Client Layer]
+        CL[React Dashboard / API Clients / Webhooks]
+    end
+
+    subgraph APIGateway [API Gateway]
+        direction LR
+        Auth[Auth Service <br/> JWT/OAuth2]
+        WebH[Webhook <br/> Handlers]
+        Anal[Analytics <br/> Endpoints]
+    end
+
+    subgraph WorkflowEngine [Workflow Engine - n8n]
+        direction LR
+        Trig[Triggers <br/> Cron/Webhook]
+        Logic[Logic Nodes <br/> If/Switch]
+        Act[Action Nodes <br/> Gmail/Slack/Gs]
+    end
+
+    subgraph DataLayer [Data Layer]
+        direction LR
+        PG[PostgreSQL <br/> Metadata]
+        RD[Redis <br/> Queue/Cache]
+        Ext[External APIs <br/> 15+ Services]
+    end
+
+    %% Connections
+    ClientLayer --> APIGateway
+    APIGateway --> WorkflowEngine
+    WorkflowEngine --> DataLayer
+
+    %% Styling to match the original "boxed" look
+    style ClientLayer fill:#1a1a1a,stroke:#fff,stroke-width:2px,color:#fff
+    style APIGateway fill:#1a1a1a,stroke:#fff,stroke-width:2px,color:#fff
+    style WorkflowEngine fill:#1a1a1a,stroke:#fff,stroke-width:2px,color:#fff
+    style DataLayer fill:#1a1a1a,stroke:#fff,stroke-width:2px,color:#fff
+    
+    %% Internal Node Styling
+    style CL fill:#333,stroke:#ccc
+    style Auth fill:#333,stroke:#ccc
+    style WebH fill:#333,stroke:#ccc
+    style Anal fill:#333,stroke:#ccc
+    style Trig fill:#333,stroke:#ccc
+    style Logic fill:#333,stroke:#ccc
+    style Act fill:#333,stroke:#ccc
+    style PG fill:#333,stroke:#ccc
+    style RD fill:#333,stroke:#ccc
+    style Ext fill:#333,stroke:#ccc
 
 
 
