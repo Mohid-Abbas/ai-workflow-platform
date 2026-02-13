@@ -122,6 +122,7 @@ graph LR
 
 ## 📁 Project Structure
 
+```
 ai-workflow-platform/
 ├── backend/
 │   ├── app/
@@ -146,7 +147,7 @@ ai-workflow-platform/
 ├── init-db.sql                  # PostgreSQL schema
 └── README.md
 
-
+```
 
 ## 🛠️ Setup & Installation
 
