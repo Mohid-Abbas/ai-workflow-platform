@@ -56,6 +56,8 @@ A enterprise workflow automation hub inspired by Zapier and Make.com, built with
 │  │ (Metadata)   │  │ (Queue/Cache)│  │ (15+ Services)   │   │
 │  └──────────────┘  └──────────────┘  └──────────────────┘   │
 └─────────────────────────────────────────────────────────────┘ -->
+
+```mermaid
 graph LR
     %% Direction: Left to Right
 
@@ -106,8 +108,7 @@ graph LR
     style PG fill:#333,stroke:#ccc
     style RD fill:#333,stroke:#ccc
     style Ext fill:#333,stroke:#ccc
-
-
+```
 
 ## 🚀 Tech Stack
 
