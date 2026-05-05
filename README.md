@@ -22,41 +22,6 @@ A enterprise workflow automation hub inspired by Zapier and Make.com, built with
 
 ## 🏗️ System Architecture
 
-
-<!-- ┌─────────────────────────────────────────────────────────────┐
-│                        Client Layer                         │
-│         (React Dashboard / API Clients / Webhooks)          │
-└──────────────────────┬──────────────────────────────────────┘
-│
-▼
-┌─────────────────────────────────────────────────────────────┐
-│                      API Gateway                            │
-│                     (FastAPI Server)                        │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐   │
-│  │ Auth Service │  │ Webhook      │  │ Analytics        │   │
-│  │ (JWT/OAuth2) │  │ Handlers     │  │ Endpoints        │   │
-│  └──────────────┘  └──────────────┘  └──────────────────┘   │
-└──────────────────────┬──────────────────────────────────────┘
-│
-▼
-┌─────────────────────────────────────────────────────────────┐
-│                   Workflow Engine                           │
-│                        (n8n)                                │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐   │
-│  │ Triggers     │  │ Logic Nodes  │  │ Action Nodes     │   │
-│  │(Cron/Webhook)│  │ (If/Switch)  │  │ (Gmail/Slack/Gs) │   │
-│  └──────────────┘  └──────────────┘  └──────────────────┘   │
-└──────────────────────┬──────────────────────────────────────┘
-│
-▼
-┌─────────────────────────────────────────────────────────────┐
-│                    Data Layer                               │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐   │
-│  │ PostgreSQL   │  │ Redis        │  │ External APIs    │   │
-│  │ (Metadata)   │  │ (Queue/Cache)│  │ (15+ Services)   │   │
-│  └──────────────┘  └──────────────┘  └──────────────────┘   │
-└─────────────────────────────────────────────────────────────┘ -->
-
 ```mermaid
 graph LR
     %% Direction: Left to Right
@@ -96,7 +61,7 @@ graph LR
     style APIGateway fill:#1a1a1a,stroke:#fff,stroke-width:2px,color:#fff
     style WorkflowEngine fill:#1a1a1a,stroke:#fff,stroke-width:2px,color:#fff
     style DataLayer fill:#1a1a1a,stroke:#fff,stroke-width:2px,color:#fff
-    
+
     %% Internal Node Styling
     style CL fill:#333,stroke:#ccc
     style Auth fill:#333,stroke:#ccc
@@ -146,7 +111,6 @@ ai-workflow-platform/
 ├── docker-compose.yml
 ├── init-db.sql                  # PostgreSQL schema
 └── README.md
-
 ```
 
 ## 🛠️ Setup & Installation
@@ -172,44 +136,51 @@ cp .env.example .env
 3. **Start services**
 ```bash
 docker-compose up -d
+```
 
 4. **Access services**
     - FastAPI Docs: http://localhost:8000/docs
     - n8n Editor: http://localhost:5678
     - Dashboard: http://localhost:8000/dashboard
+
 Services included:
-    - FastAPI backend (port 8000)
-    - PostgreSQL (port 5432)
-    - Redis (port 6379)
-    - n8n automation server (port 5678)
+- FastAPI backend (port 8000)
+- PostgreSQL (port 5432)
+- Redis (port 6379)
+- n8n automation server (port 5678)
 
-
-Manual Setup:
+### Manual Setup
 
 1. **Install Python dependencies**
 ```bash
 cd backend
 pip install -r requirements.txt
+```
 
 2. **Setup PostgreSQL**
-```bash
+```sql
 CREATE DATABASE workflow_platform;
 CREATE USER admin WITH PASSWORD 'password';
 GRANT ALL PRIVILEGES ON DATABASE workflow_platform TO admin;
+```
 
 3. **Run migrations**
 ```bash
 python init_db.py
+```
 
 4. **Start services**
 ```bash
 python -m app.main
+```
 
 5. **Start n8n server**
 ```bash
 n8n start
+```
 
 6. **Access services**
+```bash
 # Terminal 1: FastAPI
 uvicorn app.main:app --reload
 
@@ -218,40 +189,40 @@ n8n start
 
 # Terminal 3: Redis (if not using Docker)
 redis-server
+```
 
+## 🔌 Core Integrations
 
-🔌 Core Integrations:
+### Pre-built Workflows (n8n JSON included)
 
+**📧 Gmail → Slack Notifications**
+- Trigger: New email with specific label
+- Action: Send formatted notification to Slack channel
+- Error Handling: Retry 3x, then send failure email
 
-Pre-built Workflows (n8n JSON included)
-📧 Gmail → Slack Notifications
-    Trigger: New email with specific label
-    Action: Send formatted notification to Slack channel
-    Error Handling: Retry 3x, then send failure email
+**📝 Notion → Google Sheets Backup**
+- Trigger: Database update in Notion
+- Transform: Map Notion properties to sheet columns
+- Action: Append row to Google Sheets
+- Conditional Logic: Skip if "Archived" status
 
-📝 Notion → Google Sheets Backup
-    Trigger: Database update in Notion
-    Transform: Map Notion properties to sheet columns
-    Action: Append row to Google Sheets
-    Conditional Logic: Skip if "Archived" status
+**🎫 Webhook → Multi-Channel Alert**
+- Trigger: HTTP POST from external system
+- Routing:
+  - If priority=High → Slack + Email + SMS
+  - If priority=Low → Email only
+- Error Handling: Dead letter queue after 5 failures
 
-🎫 Webhook → Multi-Channel Alert
-    Trigger: HTTP POST from external system
-    Routing:
-        If priority=High → Slack + Email + SMS
-        If priority=Low → Email only
-    Error Handling: Dead letter queue after 5 failures
+**📊 Scheduled Data Sync**
+- Trigger: Cron job (every hour)
+- Extract: Query PostgreSQL analytics table
+- Transform: Aggregate metrics
+- Load: Upload to Google Sheets dashboard
 
-📊 Scheduled Data Sync
-    Trigger: Cron job (every hour)
-    Extract: Query PostgreSQL analytics table
-    Transform: Aggregate metrics
-    Load: Upload to Google Sheets dashboard
+## 📊 API Endpoints
 
+### Workflow Management
 
-📊 API Endpoints :
-
-Workflow Management
 ```http
 GET    /api/v1/workflows              # List all workflows
 POST   /api/v1/workflows              # Create new workflow
@@ -260,20 +231,23 @@ DELETE /api/v1/workflows/{id}         # Delete workflow
 POST   /api/v1/workflows/{id}/execute # Trigger manually
 ```
 
-Webhook Receivers
+### Webhook Receivers
+
 ```http
 POST   /webhooks/incoming/{token}     # External service callbacks
 GET    /webhooks/status/{id}          # Check delivery status
 ```
 
-Analytics & Monitoring
+### Analytics & Monitoring
+
 ```http
 GET    /api/v1/analytics/executions   # Execution history
 GET    /api/v1/analytics/metrics      # Success/failure rates
 GET    /api/v1/logs/{workflow_id}     # Detailed logs
 ```
 
-Example: Create Workflow
+### Example: Create Workflow
+
 ```http
 POST /api/v1/workflows
 Content-Type: application/json
@@ -298,9 +272,10 @@ Authorization: Bearer <jwt_token>
 }
 ```
 
-🧠 Error Handling & Reliability :
+## 🧠 Error Handling & Reliability
 
-Retry Mechanism
+### Retry Mechanism
+
 ```python
 # Exponential backoff strategy
 def execute_with_retry(task, max_retries=3):
@@ -316,42 +291,54 @@ def execute_with_retry(task, max_retries=3):
     move_to_dead_letter_queue(task)
 ```
 
-Circuit Breaker Pattern
-    If error rate > 50% in 5 minutes, pause workflow
-    Send notification to admin
-    Auto-resume after 15 minutes or manual override
+### Circuit Breaker Pattern
+- If error rate > 50% in 5 minutes, pause workflow
+- Send notification to admin
+- Auto-resume after 15 minutes or manual override
 
-📸 Screenshots
+## 📸 Screenshots
+
 Add these screenshots to your repo:
-1. n8n Workflow Canvas
+
+**1. n8n Workflow Canvas**
+
 ![n8n Workflow Canvas](./docs/n8n-canvas.png)
+
 Example of Gmail to Slack workflow with conditional logic
 
-2. FastAPI Dashboard
+**2. FastAPI Dashboard**
+
 ![FastAPI Dashboard](./docs/api-dashboard.svg)
+
 Real-time execution monitoring and analytics
 
-3. Webhook Logs
+**3. Webhook Logs**
+
 ![Webhook Logs](./docs/webhook-logs.svg)
+
 Detailed request/response logging for debugging
 
-4. Database Schema
+**4. Database Schema**
+
 ```sql
 -- Key tables structure
-workflows (id, name, config, created_at)
-executions (id, workflow_id, status, started_at, completed_at)
-webhooks (id, endpoint, payload, status_code, retry_count)
+workflows   (id, name, config, created_at)
+executions  (id, workflow_id, status, started_at, completed_at)
+webhooks    (id, endpoint, payload, status_code, retry_count)
 ```
 
-🎯 Performance Metrics
-Based on testing with 1000+ workflow executions:
-    Average Execution Time: 245ms
-    Success Rate: 99.2% (with retry logic)
-    Throughput: 50 workflows/minute
-    Manual Time Saved: 80% reduction in data entry tasks
+## 🎯 Performance Metrics
 
-🚀 Advanced Features
-1. Webhook Signature Verification
+Based on testing with 1000+ workflow executions:
+- **Average Execution Time**: 245ms
+- **Success Rate**: 99.2% (with retry logic)
+- **Throughput**: 50 workflows/minute
+- **Manual Time Saved**: 80% reduction in data entry tasks
+
+## 🚀 Advanced Features
+
+### 1. Webhook Signature Verification
+
 ```python
 import hmac
 import hashlib
@@ -365,51 +352,58 @@ def verify_webhook(payload, signature, secret):
     return hmac.compare_digest(f"sha256={expected}", signature)
 ```
 
-2. Dynamic Data Mapping
-    JSONPath support for nested data extraction
-    Template engine (Jinja2) for custom transformations
-    Schema validation using Pydantic
+### 2. Dynamic Data Mapping
+- JSONPath support for nested data extraction
+- Template engine (Jinja2) for custom transformations
+- Schema validation using Pydantic
 
-3. WebSocket Real-time Updates
-    Frontend receives live execution updates without polling
+### 3. WebSocket Real-time Updates
+- Frontend receives live execution updates without polling
 
-🌐 Deployment Options
-Local Development
+## 🌐 Deployment Options
+
+### Local Development
+
 ```bash
 docker-compose up -d
 ```
 
-Production (AWS)
-    ECS/Fargate: For FastAPI backend
-    RDS: Managed PostgreSQL
-    ElastiCache: Redis cluster
-    EC2/Docker: n8n instance
-    ALB: Application Load Balancer with SSL
+### Production (AWS)
+- **ECS/Fargate**: For FastAPI backend
+- **RDS**: Managed PostgreSQL
+- **ElastiCache**: Redis cluster
+- **EC2/Docker**: n8n instance
+- **ALB**: Application Load Balancer with SSL
 
-Production (Render/Railway)
-    Standard Docker deployment supported.
+### Production (Render/Railway)
+Standard Docker deployment supported.
 
-📚 Learning Outcomes
+## 📚 Learning Outcomes
+
 This project demonstrates skills:
-    Workflow Orchestration: Designing fault-tolerant automation pipelines
-    API Integration: Connecting disparate services via REST APIs and webhooks
-    Database Design: Schema optimization for high-throughput logging
-    Error Handling: Graceful degradation and retry strategies
-    Monitoring: Building observability into distributed systems
-    n8n Proficiency: Enterprise automation tool expertise
+- **Workflow Orchestration**: Designing fault-tolerant automation pipelines
+- **API Integration**: Connecting disparate services via REST APIs and webhooks
+- **Database Design**: Schema optimization for high-throughput logging
+- **Error Handling**: Graceful degradation and retry strategies
+- **Monitoring**: Building observability into distributed systems
+- **n8n Proficiency**: Enterprise automation tool expertise
 
-🔮 Future Enhancements
-    [ ] AI-Powered Workflow Suggestions: GPT-4 integration to recommend automations based on usage patterns
-    [ ] Multi-tenancy: Organization-based isolation for SaaS offering
-    [ ] Visual Workflow Builder: React-based drag-and-drop interface
-    [ ] Custom Nodes: Python SDK for third-party integrations
-    [ ] Workflow Versioning: Git-like version control for workflows
+## 🔮 Future Enhancements
 
-📄 License
+- [ ] **AI-Powered Workflow Suggestions**: GPT-4 integration to recommend automations based on usage patterns
+- [ ] **Multi-tenancy**: Organization-based isolation for SaaS offering
+- [ ] **Visual Workflow Builder**: React-based drag-and-drop interface
+- [ ] **Custom Nodes**: Python SDK for third-party integrations
+- [ ] **Workflow Versioning**: Git-like version control for workflows
+
+## 📄 License
+
 MIT License - feel free to use for educational and commercial purposes.
 
-👤 Author
-Muhammad Mohid Abbas
-    BSAI Undergraduate @ FAST-NUCES
-    AI Automation & Agentic Systems
-    [LinkedIn](https://www.linkedin.com/in/muhammad-mohid-abbas/) | [GitHub](https://github.com/Mohid-Abbas) | [Email](mailto:mohidabbas.ai@gmail.com)
+## 👤 Author
+
+**Muhammad Mohid Abbas**
+- BSAI Undergraduate @ FAST-NUCES
+- AI Automation & Agentic Systems
+
+[LinkedIn](https://www.linkedin.com/in/muhammad-mohid-abbas/) | [GitHub](https://github.com/Mohid-Abbas) | [Email](mailto:mohidabbas.ai@gmail.com)
